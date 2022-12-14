@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="ICM20948_ros" type="ICM20948_ros_node" name="imu_node" output="screen" ns ="icm20948"/>
+</launch>

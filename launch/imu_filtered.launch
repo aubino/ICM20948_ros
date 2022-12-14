@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="ICM20948_ros" type="ICM20948_ros_node" name="imu_node" output="screen" ns ="icm20948"/>
+    <node pkg="imu_filter_madgwick" type = "imu_filter_node" name= "icm20948_filter" ns ="icm20948">
+        <!--<param name="cap_width" value="1280"/>-->
+    </node>
+</launch>

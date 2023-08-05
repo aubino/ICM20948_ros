@@ -4,12 +4,31 @@
 #include <sensor_msgs/MagneticField.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <string>
+#include <boost/program_options.hpp>
 #define PI 3.14159265359
 #define G 9.81
 
+namespace po = boost::program_options ; 
 
 int main(int argc, char* argv[])
 {
+	po::options_description desc("Mandatory options");
+	double frequency = 0 ; 
+	desc.add_options ()
+    ("help,h","This node will launch and publish data froim the ICM20948 from i2c port.")
+    ("frequency,f",boost::program_options::value<double>(),"Acquisition frequency of the the data . Mandatory option") ; 
+	po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+	po::notify(vm);
+	if(vm.count("help,h") || !vm.count("frequency"))
+    {
+        std::cout<<desc ;
+        return 0 ;
+    }
+    else
+    {
+        frequency = vm["frequency"].as<double>() ; 
+    }
 	IMU_EN_SENSOR_TYPE enMotionSensorType;
 	IMU_ST_ANGLES_DATA stAngles;
 	IMU_ST_SENSOR_DATA stGyroRawData;
@@ -43,9 +62,10 @@ int main(int argc, char* argv[])
 		imuDataGet( &stAngles, &stGyroRawData, &stAccelRawData, &stMagnRawData);
 		tf2::Quaternion q; 
 		q.setRPY(stAngles.fRoll*PI/180,stAngles.fPitch*PI/180,stAngles.fYaw*PI/180);
-		data.orientation.x=q.getX();
-		data.orientation.y=q.getY(); 
-		data.orientation.z=q.getZ();
+		data.orientation.x = q.getX() ;
+		data.orientation.y = q.getY() ; 
+		data.orientation.z = q.getZ() ;
+		data.orientation.w = q.getZ() ; 
 		data.angular_velocity.x = stGyroRawData.fX*PI/180;
 		data.angular_velocity.y = stGyroRawData.fY*PI/180;
 		data.angular_velocity.z = stGyroRawData.fZ*PI/180;
@@ -59,7 +79,8 @@ int main(int argc, char* argv[])
 		imu_data_pub.publish(data);
 		mag.header.stamp=ros::Time::now();
 		mag_data_pub.publish(mag);
-		usleep(10*1000);
+		double period = 1/frequency ; 
+		usleep(period*1.e06);
 	}
 	return 0;
 }

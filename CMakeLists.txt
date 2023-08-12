@@ -13,8 +13,12 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf2
 )
+find_package(Boost REQUIRED program_options filesystem)
 
+add_definitions(
+    ${Boost_DEFINITIONS})
 
+include_directories(${Boost_INCLUDE_DIR})
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -101,6 +105,7 @@ add_executable(${PROJECT_NAME}_node src/roswrapper.cpp src/ICM20948.cpp)
 ## Specify libraries to link a library or executable target against
  target_link_libraries(${PROJECT_NAME}_node
    ${catkin_LIBRARIES} 
+   ${Boost_LIBRARIES}
  )
 
 #############

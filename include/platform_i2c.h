@@ -47,7 +47,7 @@ int8_t usr_read(const uint8_t addr, uint8_t *data, const uint32_t len) {
     icm20948_return_code_t ret = ICM20948_RET_OK;
     if (ioctl(file, I2C_SLAVE, addr) < 0) {
         perror("Failed to acquire bus access and/or talk to slave.");
-        return -1;
+        return ICM20948_RET_GEN_FAIL ;
     }
 
     // Prepare the I2C message for reading
@@ -65,9 +65,9 @@ int8_t usr_read(const uint8_t addr, uint8_t *data, const uint32_t len) {
     // Perform the I2C read operation
     if (ioctl(file, I2C_RDWR, &transfer) < 0) {
         perror("Failed to read from the I2C device.");
-        return -1;
+        return ICM20948_RET_GEN_FAIL;
     }
-    return ret;
+    return ICM20948_RET_OK ;
 }
 
 void usr_delay_us(uint32_t period) {

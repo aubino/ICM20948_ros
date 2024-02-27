@@ -14,7 +14,6 @@
 #ifndef __PLATFORMI2C_H__
 #define __PLATFORMI2C_H__
 #define DEVICE "/dev/i2c-1" // Adjust this path according to your system
-#define I2C_ADD_ICM20948            0x68
 
 
 int file  =  open(DEVICE, O_RDWR);   
@@ -46,15 +45,28 @@ int8_t usr_write(const uint8_t addr, const uint8_t *data, const uint32_t len) {
 
 int8_t usr_read(const uint8_t addr, uint8_t *data, const uint32_t len) {
     icm20948_return_code_t ret = ICM20948_RET_OK;
+    if (ioctl(file, I2C_SLAVE, addr) < 0) {
+        perror("Failed to acquire bus access and/or talk to slave.");
+        return -1;
+    }
 
-    // Assert the CS
+    // Prepare the I2C message for reading
+    struct i2c_msg message;
+    message.addr = addr;
+    message.flags = I2C_M_RD; // Read operation flag
+    message.len = len;
+    message.buf = data;
 
-    // Write your data
+    // Prepare the I2C transfer
+    struct i2c_rdwr_ioctl_data transfer;
+    transfer.msgs = &message;
+    transfer.nmsgs = 1; // Number of messages
 
-    // Read out the data, placing the result in the data buffer
-
-    // De-assert the CS
-
+    // Perform the I2C read operation
+    if (ioctl(file, I2C_RDWR, &transfer) < 0) {
+        perror("Failed to read from the I2C device.");
+        return -1;
+    }
     return ret;
 }
 

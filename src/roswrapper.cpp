@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	po::options_description desc("Mandatory options");
 	double frequency = 0 ; 
 	desc.add_options ()
-    ("help,h","This node will launch and publish data froim the ICM20948 from i2c port.")
+    ("help,h","This node will launch and publish data from the ICM20948 from i2c port.")
     ("frequency,f",boost::program_options::value<double>(),"Acquisition frequency of the the data . Mandatory option") ; 
 	po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);

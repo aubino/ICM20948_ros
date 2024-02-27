@@ -1,0 +1,3 @@
+[submodule "icm20948"]
+	path = icm20948
+	url = https://github.com/stephendpmurphy/icm20948.git

@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <math.h>
+#include <boost/thread.hpp>
 #include "../icm20948/inc/icm20948_api.h"
 #ifndef __PLATFORMI2C_H__
 #define __PLATFORMI2C_H__
@@ -72,5 +73,6 @@ int8_t usr_read(const uint8_t addr, uint8_t *data, const uint32_t len) {
 
 void usr_delay_us(uint32_t period) {
     // Delay for the requested period
+    boost::this_thread::sleep_for(boost::chrono::microseconds(period));
 }
 #endif //__USERI2C_H__

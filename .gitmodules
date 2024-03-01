@@ -1,3 +1,6 @@
 [submodule "icm20948"]
 	path = icm20948
 	url = https://github.com/stephendpmurphy/icm20948.git
+[submodule "JetsonGPIO"]
+	path = JetsonGPIO
+	url = https://github.com/pjueon/JetsonGPIO.git

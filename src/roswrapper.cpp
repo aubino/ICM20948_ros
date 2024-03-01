@@ -5,6 +5,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <string>
 #include <boost/program_options.hpp>
+#include "../JetsonGPIO/include/JetsonGPIO.h"
 #define PI 3.14159265359
 #define G 9.81
 

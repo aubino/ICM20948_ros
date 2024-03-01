@@ -244,7 +244,7 @@ void icm20948init(void)
   I2C_WriteOneByte(I2C_ADD_ICM20948, REG_ADD_PWR_MIGMT_1,  REG_VAL_ALL_RGE_RESET);
   usleep(10*1000);
   I2C_WriteOneByte(I2C_ADD_ICM20948, REG_ADD_PWR_MIGMT_1,  REG_VAL_RUN_MODE);  
-
+  I2C_WriteOneByte(I2C_ADD_ICM20948,REG_ADD_INT_ENABLE_1,0x01); // Enabling interropt for when data is ready 
   /* user bank 2 register */
   I2C_WriteOneByte(I2C_ADD_ICM20948, REG_ADD_REG_BANK_SEL, REG_VAL_REG_BANK_2);
   I2C_WriteOneByte( I2C_ADD_ICM20948, REG_ADD_GYRO_SMPLRT_DIV, 0x00); // Frequency setting for gyro

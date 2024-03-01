@@ -78,6 +78,15 @@
     #define REG_VAL_REG_BANK_1  0x10
     #define REG_VAL_REG_BANK_2  0x20
     #define REG_VAL_REG_BANK_3  0x30
+// Interrrupt pin 
+#define REG_ADD_INT_ENABLE          0x10 
+#define REG_ADD_INT_ENABLE_1        0x11 
+#define REG_ADD_INT_ENABLE_2        0x12 
+#define REG_ADD_INT_ENABLE_3        0x13
+#define REG_ADD_INT_STATUS          0x19
+#define REG_ADD_INT_STATUS_1        0x1A
+#define REG_ADD_INT_STATUS_2        0x1B
+#define REG_ADD_INT_STATUS_3        0x1C
 
 /* user bank 1 register */
 /* user bank 2 register */
